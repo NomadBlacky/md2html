@@ -1,0 +1,32 @@
+stages:
+  - assembly
+  - native-image
+
+assembly:
+  stage: assembly
+  image: hseeberger/scala-sbt:8u181_2.12.8_1.2.8
+  script:
+    - >-
+      sbt
+      -sbt-dir .sbt
+      -ivy .ivy2
+      -mem 2048
+      assembly
+  cache:
+    paths:
+      - .sbt
+      - .ivy2
+  artifacts:
+    paths:
+      - target/scala-2.12/md2html.jar
+
+native-image:
+  stage: native-image
+  dependencies:
+    - assembly
+  image: nomadblacky/graal-native-image:19.0.0
+  script:
+    - native-image md2html --initialize-at-build-time=scala -jar target/scala-2.12/md2html.jar
+  artifacts:
+    paths:
+      - md2html

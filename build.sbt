@@ -13,7 +13,8 @@ lazy val root = (project in file("."))
       "org.scalatest" %% "scalatest" % "3.0.5" % Test
     ),
     buildInfoKeys := Seq[BuildInfoKey](name, version),
-    buildInfoPackage := "com.github.nomadblacky.md2html"
+    buildInfoPackage := "com.github.nomadblacky.md2html",
+    assemblyJarName := s"${name.value}.jar"
   )
 
 // See https://www.scala-sbt.org/1.x/docs/Using-Sonatype.html for instructions on how to publish to Sonatype.
