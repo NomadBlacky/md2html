@@ -4,7 +4,7 @@ ThisBuild / organization := "com.github.NomadBlacky"
 ThisBuild / organizationName := "NomadBlacky"
 
 lazy val root = (project in file("."))
-  .enablePlugins(BuildInfoPlugin)
+  .enablePlugins(BuildInfoPlugin, GraalVMNativeImagePlugin)
   .settings(
     name := "md2html",
     libraryDependencies ++= Seq(
@@ -14,7 +14,8 @@ lazy val root = (project in file("."))
     ),
     buildInfoKeys := Seq[BuildInfoKey](name, version),
     buildInfoPackage := "com.github.nomadblacky.md2html",
-    assemblyJarName := s"${name.value}.jar"
+    assemblyJarName := s"${name.value}.jar",
+    graalVMNativeImageOptions += "--initialize-at-build-time=scala"
   )
 
 // See https://www.scala-sbt.org/1.x/docs/Using-Sonatype.html for instructions on how to publish to Sonatype.
